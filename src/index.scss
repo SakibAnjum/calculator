@@ -1,0 +1,55 @@
+$font-stack: 'Segoe UI', sans-serif;
+$grey-light: #ddd;
+
+body {
+  font-family: $font-stack;
+}
+
+.row {
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.row:last-child {
+  margin-bottom: auto;
+  margin-right: auto;
+}
+
+.key {
+  border: 1px solid $grey-light;
+  display: inline-block;
+  padding: 15px 20px 15px 20px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.key:hover {
+  cursor: pointer;
+  background-color: $grey-light;
+}
+
+.keyboard {
+  
+}
+
+.display {
+  border: 1px solid $grey-light;
+  border-radius: 5px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.calc {
+  border: 1px solid $grey-light;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 300px;
+  min-width: 200px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+}
+
+.container {
+  position: relative;
+}
