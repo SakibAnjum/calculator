@@ -41,28 +41,28 @@ function reducer(state=initialState, action){
   switch(action.type){
     case 'CLEAR':
       return initialState
+
     case 'KEY':
-      
-      //console.log('keypressed:', action.label)
-      return Object.assign({}, state, {curNum:'', display: action.label})
+      return { ...state, curNum:'', display: action.label}
+
     case 'ADD_NUM':
       let curNum = ''.concat(state.curNum,action.data)
-      
-      return Object.assign({}, state, {curNum, display: curNum })
+      return { ...state, curNum, display: curNum }
+
     case 'ADD_DOT':
       if(state.curNum.indexOf('.') == -1){
         let curNum = ''.concat(state.curNum,'.') 
         return { ...state, curNum, display: curNum }
       }
       else return state
+
     case 'PLUS':
-      return Object.assign({}, state, {op: 'PLUS', preNum: state.curNum, curNum: ''})
+      return { ...state, op: 'PLUS', preNum: state.curNum, curNum: ''}
+
     case 'EQUAL':
       switch(state.op){
         case 'PLUS':
-          return Object.assign({}, state, {
-            display: parseFloat(state.preNum) + parseFloat(state.curNum)
-          })
+          return { ...state, display: parseFloat(state.preNum) + parseFloat(state.curNum) }
       }
     default:
       return state
