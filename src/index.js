@@ -52,7 +52,7 @@ function reducer(state=initialState, action){
     case 'ADD_DOT':
       if(state.curNum.indexOf('.') == -1){
         let curNum = ''.concat(state.curNum,'.') 
-        return Object.assign({}, state, {curNum, display: curNum })
+        return { ...state, curNum, display: curNum }
       }
       else return state
     case 'PLUS':
