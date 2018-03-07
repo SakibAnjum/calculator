@@ -10,27 +10,29 @@ import {Provider, connect} from 'react-redux'
 import './index.scss'
 
 const initialState = {
-  display:"0",
-  preNum: 0,  //previous number
+  display:'0',
+  preNum: '',  //previous number
   curNum: '', //current number
-  numMode: false
+  op:'' // last used operator
 }
 
 const actions = {
   keypress: (label)=>{
     switch(label){
       case 'C':
-        return {type: "CLEAR"}
+        return {type: 'CLEAR'}
       case '.':
-        return {type: "ADD_DOT"}
+        return {type: 'ADD_DOT'}
       case '+':
-        return {type: "PLUS"}
+        return {type: 'PLUS'}
+      case '=':
+        return {type: 'EQUAL'}
       default:
         //Handle numbers: 0-9
         if(Number.isInteger(parseInt(label)))
-          return {type: "ADD_NUM", data: label}
+          return {type: 'ADD_NUM', data: label}
         else
-          return {type: "KEY", label}
+          return {type: 'KEY', label}
     }
   }
 }
@@ -39,28 +41,29 @@ function reducer(state=initialState, action){
   switch(action.type){
     case 'CLEAR':
       return initialState
-    case "KEY":
+    case 'KEY':
       
-      //console.log("keypressed:", action.label)
-      return {curNum:'', display: action.label}
+      //console.log('keypressed:', action.label)
+      return Object.assign({}, state, {curNum:'', display: action.label})
     case 'ADD_NUM':
       let curNum = ''.concat(state.curNum,action.data)
-      let preNum = parseFloat(curNum)
-      return {preNum, curNum, display: curNum }
+      
+      return Object.assign({}, state, {curNum, display: curNum })
     case 'ADD_DOT':
       if(state.curNum.indexOf('.') == -1){
         let curNum = ''.concat(state.curNum,'.') 
-        return {curNum, display: curNum }
+        return Object.assign({}, state, {curNum, display: curNum })
       }
       else return state
-    case "PLUS":
-      let result = state.preNum + parseFloat(state.curNum)
-      return {
-        curNum: '',
-        preNum: result,
-        display: state.curNum
+    case 'PLUS':
+      return Object.assign({}, state, {op: 'PLUS', preNum: state.curNum, curNum: ''})
+    case 'EQUAL':
+      switch(state.op){
+        case 'PLUS':
+          return Object.assign({}, state, {
+            display: parseFloat(state.preNum) + parseFloat(state.curNum)
+          })
       }
-      
     default:
       return state
   }
@@ -69,7 +72,7 @@ function reducer(state=initialState, action){
 
 const _Display = (props)=>{
   return (
-    <div className="display">{props.display}</div>
+    <div className='display'>{props.display}</div>
   )
 }
 
@@ -77,7 +80,7 @@ const Display = connect(state=>state)(_Display)
 
 const _Key = ({keypress, children})=>{
   return (
-    <div className="key" onClick={()=>keypress(children)}>
+    <div className='key' onClick={()=>keypress(children)}>
       {children}
     </div>
   )
@@ -94,11 +97,11 @@ const Keyboard = (props)=>{
     [0,1,'.','='],
   ]
   return (
-    <div className="keyboard">
-      {layout.map(row=>{
+    <div className='keyboard'>
+      {layout.map((row, rid)=>{
         return (
-         <div className="row">
-          {row.map(item=><Key>{item}</Key>)}
+         <div className='row' key={'rid'+rid}>
+          {row.map((item, idx)=><Key key={'item'+idx}>{item}</Key>)}
          </div> 
         )
       })}
@@ -108,8 +111,8 @@ const Keyboard = (props)=>{
 
 const Calculator = ()=>{
   return (
-    <div className="container">
-      <div className="calc">
+    <div className='container'>
+      <div className='calc'>
         <Display/>
         <Keyboard/>
       </div>
