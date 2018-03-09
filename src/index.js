@@ -42,8 +42,6 @@ const actions = {
         //Handle numbers: 0-9
         if(Number.isInteger(parseInt(label)))
           return {type: 'ADD_NUM', data: label}
-        // else
-        //   return {type: 'KEY', label}
     }
   }
 }
@@ -52,9 +50,6 @@ function reducer(state=initialState, action){
   switch(action.type){
     case 'CLEAR':
       return initialState
-
-    // case 'KEY':
-    //   return { ...state, curNum:'', display: action.label}
 
     case 'ADD_NUM':
       let curNum = ''.concat(state.curNum,action.data)
