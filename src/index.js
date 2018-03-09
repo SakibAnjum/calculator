@@ -9,6 +9,11 @@ import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
 import './index.scss'
 
+const symbols = {
+  MUL: '×',
+  DIV: '÷'
+}
+
 const initialState = {
   display:'0',
   preNum: '',  //previous number
@@ -25,14 +30,20 @@ const actions = {
         return {type: 'ADD_DOT'}
       case '+':
         return {type: 'PLUS'}
+      case '-':
+        return {type: 'MINUS'}
+      case symbols.MUL:
+        return {type: 'MUL'}
+      case symbols.DIV:
+        return {type: 'DIV'}
       case '=':
         return {type: 'EQUAL'}
       default:
         //Handle numbers: 0-9
         if(Number.isInteger(parseInt(label)))
           return {type: 'ADD_NUM', data: label}
-        else
-          return {type: 'KEY', label}
+        // else
+        //   return {type: 'KEY', label}
     }
   }
 }
@@ -42,8 +53,8 @@ function reducer(state=initialState, action){
     case 'CLEAR':
       return initialState
 
-    case 'KEY':
-      return { ...state, curNum:'', display: action.label}
+    // case 'KEY':
+    //   return { ...state, curNum:'', display: action.label}
 
     case 'ADD_NUM':
       let curNum = ''.concat(state.curNum,action.data)
@@ -59,10 +70,25 @@ function reducer(state=initialState, action){
     case 'PLUS':
       return { ...state, op: 'PLUS', preNum: state.curNum, curNum: ''}
 
+    case 'MINUS':
+      return { ...state, op: 'MINUS', preNum: state.curNum, curNum: ''}
+
+    case 'MUL':
+      return { ...state, op: 'MUL', preNum: state.curNum, curNum: ''}
+
+    case 'DIV':
+      return { ...state, op: 'DIV', preNum: state.curNum, curNum: ''}
+
     case 'EQUAL':
       switch(state.op){
         case 'PLUS':
           return { ...state, display: parseFloat(state.preNum) + parseFloat(state.curNum) }
+        case 'MINUS':
+          return { ...state, display: parseFloat(state.preNum) - parseFloat(state.curNum) }
+        case 'MUL':
+          return { ...state, display: parseFloat(state.preNum) * parseFloat(state.curNum) }
+        case 'DIV':
+          return { ...state, display: parseFloat(state.preNum) / parseFloat(state.curNum) }
       }
     default:
       return state
@@ -91,7 +117,7 @@ const Key = connect(null, actions)(_Key)
 const Keyboard = (props)=>{
   let layout = [
     ['SQR','SQRT','C'],
-    [8,9,'÷','×'],
+    [8,9,symbols.DIV,symbols.MUL],
     [5,6,7,'-'],
     [2,3,4,'+'],
     [0,1,'.','='],
