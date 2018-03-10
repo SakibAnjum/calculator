@@ -1,0 +1,1 @@
+A simple Javascript calculator using React & Redux.
