@@ -1,8 +1,8 @@
 ## User stories
 
-- [Done] Two number math operations
-- [Done] Clear button
-- [    ] Chaining math operations
+- [x] Two number math operations
+- [x] Clear button
+- [ ] Chaining math operations
 
 ## GUI
 
