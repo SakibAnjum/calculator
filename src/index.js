@@ -15,8 +15,9 @@ const symbols = {
 }
 
 const initialState = {
+  result: 0,
   display:'0',
-  preNum: '',  //previous number
+  preNum: [''],  //previous numbers stack
   curNum: '', //current number
   op:'' // last used operator
 }
@@ -69,7 +70,14 @@ function reducer(state=initialState, action){
 
     case 'ADD_NUM':
       let curNum = ''.concat(state.curNum,action.data)
-      return { ...state, curNum, display: curNum }
+      return {
+        ...state,
+        curNum,
+        display: curNum,
+        result: state.preNum.length >= 2 ?
+                compute(state.op, state.preNum[0], state.curNum) :
+                state.result
+      }
 
     case 'ADD_DOT':
       if(state.curNum.indexOf('.') == -1){
@@ -79,19 +87,19 @@ function reducer(state=initialState, action){
       else return state
 
     case 'PLUS':
-      return state.curNum ? { ...state, op: 'PLUS', preNum: state.curNum, curNum: ''} : state
+      return state.curNum ? { ...state, op: 'PLUS', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
 
     case 'MINUS':
-      return state.curNum ? { ...state, op: 'MINUS', preNum: state.curNum, curNum: ''} : state
+      return state.curNum ? { ...state, op: 'MINUS', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
 
     case 'MUL':
-      return state.curNum ? { ...state, op: 'MUL', preNum: state.curNum, curNum: ''} : state
+      return state.curNum ? { ...state, op: 'MUL', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
 
     case 'DIV':
-      return state.curNum ? { ...state, op: 'DIV', preNum: state.curNum, curNum: ''} : state
+      return state.curNum ? { ...state, op: 'DIV', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
 
     case 'EQUAL':
-      return { ...state, display: compute(state.op, state.preNum, state.curNum)}
+      return { ...state, display: compute(state.op, state.preNum[0], state.curNum)}
   
     default:
       return state
