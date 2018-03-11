@@ -46,6 +46,22 @@ const actions = {
   }
 }
 
+function compute(mathOp, num1, num2){
+  num1 = parseFloat(num1)
+  num2 = parseFloat(num2)
+
+  switch(mathOp){
+    case 'PLUS':
+      return num1 + num2
+    case 'MINUS':
+      return num1 - num2
+    case 'MUL':
+      return num1 * num2
+    case 'DIV':
+      return num1 / num2
+  }
+}
+
 function reducer(state=initialState, action){
   switch(action.type){
     case 'CLEAR':
@@ -75,16 +91,8 @@ function reducer(state=initialState, action){
       return state.curNum ? { ...state, op: 'DIV', preNum: state.curNum, curNum: ''} : state
 
     case 'EQUAL':
-      switch(state.op){
-        case 'PLUS':
-          return { ...state, display: parseFloat(state.preNum) + parseFloat(state.curNum) }
-        case 'MINUS':
-          return { ...state, display: parseFloat(state.preNum) - parseFloat(state.curNum) }
-        case 'MUL':
-          return { ...state, display: parseFloat(state.preNum) * parseFloat(state.curNum) }
-        case 'DIV':
-          return { ...state, display: parseFloat(state.preNum) / parseFloat(state.curNum) }
-      }
+      return { ...state, display: compute(state.op, state.preNum, state.curNum)}
+  
     default:
       return state
   }
