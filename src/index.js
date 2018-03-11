@@ -63,16 +63,16 @@ function reducer(state=initialState, action){
       else return state
 
     case 'PLUS':
-      return { ...state, op: 'PLUS', preNum: state.curNum, curNum: ''}
+      return state.curNum ? { ...state, op: 'PLUS', preNum: state.curNum, curNum: ''} : state
 
     case 'MINUS':
-      return { ...state, op: 'MINUS', preNum: state.curNum, curNum: ''}
+      return state.curNum ? { ...state, op: 'MINUS', preNum: state.curNum, curNum: ''} : state
 
     case 'MUL':
-      return { ...state, op: 'MUL', preNum: state.curNum, curNum: ''}
+      return state.curNum ? { ...state, op: 'MUL', preNum: state.curNum, curNum: ''} : state
 
     case 'DIV':
-      return { ...state, op: 'DIV', preNum: state.curNum, curNum: ''}
+      return state.curNum ? { ...state, op: 'DIV', preNum: state.curNum, curNum: ''} : state
 
     case 'EQUAL':
       switch(state.op){
