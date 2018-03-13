@@ -17,9 +17,9 @@ const symbols = {
 const initialState = {
   result: 0,
   display:'0',
-  preNum: [''],  //previous numbers stack
+  preNum: '',  //previous number
   curNum: '', //current number
-  op:'' // last used operator
+  op:'PLUS' // last used operator
 }
 
 const actions = {
@@ -64,6 +64,9 @@ function compute(mathOp, num1, num2){
 }
 
 function reducer(state=initialState, action){
+  //Result is pre calculated with previous Math op.
+  let result = 0
+
   switch(action.type){
     case 'CLEAR':
       return initialState
@@ -74,9 +77,8 @@ function reducer(state=initialState, action){
         ...state,
         curNum,
         display: curNum,
-        result: state.preNum.length >= 2 ?
-                compute(state.op, state.preNum[0], state.curNum) :
-                state.result
+        //After pressing the equal, if the user presses numbers then reset.
+        result: state.op == 'EQUAL' ? 0 : state.result 
       }
 
     case 'ADD_DOT':
@@ -87,19 +89,25 @@ function reducer(state=initialState, action){
       else return state
 
     case 'PLUS':
-      return state.curNum ? { ...state, op: 'PLUS', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
+
+      result = compute(state.op, state.result, state.curNum)
+      return state.curNum ? { ...state, op: 'PLUS', preNum: '', curNum: '', result} : state
 
     case 'MINUS':
-      return state.curNum ? { ...state, op: 'MINUS', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
+      result = compute(state.op, state.result, state.curNum)
+      return state.curNum ? { ...state, op: 'MINUS', preNum: '', curNum: '', result} : state
 
     case 'MUL':
-      return state.curNum ? { ...state, op: 'MUL', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
+      result = compute(state.op, state.result, state.curNum)
+      return state.curNum ? { ...state, op: 'MUL', preNum: '', curNum: '', result} : state
 
     case 'DIV':
-      return state.curNum ? { ...state, op: 'DIV', preNum: [state.curNum, ...state.preNum], curNum: ''} : state
+      result = compute(state.op, state.result, state.curNum)
+      return state.curNum ? { ...state, op: 'DIV', preNum: '', curNum: '', result}: state
 
     case 'EQUAL':
-      return { ...state, display: compute(state.op, state.preNum[0], state.curNum)}
+      result = compute(state.op, state.result, state.curNum)
+      return { ...state, op: 'PLUS', preNum: '', curNum: '', display: result, result}
   
     default:
       return state
