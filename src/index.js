@@ -17,7 +17,6 @@ const symbols = {
 const initialState = {
   result: 0,
   display:'0',
-  preNum: '',  //previous number
   curNum: '', //current number
   op:'PLUS' // last used operator
 }
@@ -91,23 +90,23 @@ function reducer(state=initialState, action){
     case 'PLUS':
 
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'PLUS', preNum: '', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'PLUS', curNum: '', result} : state
 
     case 'MINUS':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'MINUS', preNum: '', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'MINUS', curNum: '', result} : state
 
     case 'MUL':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'MUL', preNum: '', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'MUL', curNum: '', result} : state
 
     case 'DIV':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'DIV', preNum: '', curNum: '', result}: state
+      return state.curNum ? { ...state, op: 'DIV', curNum: '', result}: state
 
     case 'EQUAL':
       result = compute(state.op, state.result, state.curNum)
-      return { ...state, op: 'PLUS', preNum: '', curNum: '', display: result, result}
+      return { ...state, op: 'PLUS', curNum: '', display: result, result}
   
     default:
       return state
