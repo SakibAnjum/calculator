@@ -13,6 +13,8 @@
 ## ISSUES
 
 - [ ] Chaining does not work after equal
+- [ ] Handle math edge cases like: Divided by zero (1/0, 0/0), Infinity, NaN, etc.
+- [ ] Create a Status bar in the display: for displaying errors/messages.
 
 ## More features
 
@@ -26,3 +28,4 @@
 ### Extra
 
 - [ ] make a cordova app
+- [ ] port it to react-native
