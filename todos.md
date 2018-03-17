@@ -2,13 +2,15 @@
 
 - [x] Two number math operations
 - [x] Clear button
-- [ ] Chaining math operations
+- [x] Chaining math operations
 
-## GUI
+## Enhancements
 
 - [ ] Better layout
 - [ ] Use proper math symbols in the buttons
 - [ ] Color scheme
+
+## BUGS
 
 ## More features
 

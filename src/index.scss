@@ -28,6 +28,26 @@ body {
   background-color: $grey-light;
 }
 
+.clear {
+  display: inline-block;
+  float: right;
+  font-size: 0.7em;
+  color: darken($grey-light, 50%);
+  padding: 0.5px 3px 0.5px 3px;
+  border-radius: 5px;
+  border: 1px solid $grey-light;
+  margin-right: 2px;
+}
+
+.clear:hover {
+  background-color: $grey-light;
+  cursor: pointer;
+}
+
+.controls {
+  padding-bottom: 10px;
+}
+
 .keyboard {
   
 }
@@ -37,6 +57,7 @@ body {
   border-radius: 5px;
   height: 100px;
   margin-bottom: 10px;
+  padding: 5px;
 }
 
 .calc {
@@ -46,10 +67,9 @@ body {
   max-width: 300px;
   min-width: 200px;
   display: inline-block;
-  position: absolute;
-  top: 50%;
+  margin: 10px;
 }
 
 .container {
-  position: relative;
+
 }

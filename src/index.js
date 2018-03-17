@@ -134,7 +134,6 @@ const Key = connect(null, actions)(_Key)
 
 const Keyboard = (props)=>{
   let layout = [
-    ['SQR','SQRT','C'],
     [8,9,symbols.DIV,symbols.MUL],
     [5,6,7,'-'],
     [2,3,4,'+'],
@@ -153,10 +152,19 @@ const Keyboard = (props)=>{
   )
 }
 
+const _Controls = ({keypress})=>{
+  return (<div className="controls">
+    Calculator <div className="clear" onClick={()=>keypress('C')}>clear</div>
+  </div>)
+}
+
+const Controls = connect(null, actions)(_Controls)
+
 const Calculator = ()=>{
   return (
     <div className='container'>
       <div className='calc'>
+        <Controls/>
         <Display/>
         <Keyboard/>
       </div>
