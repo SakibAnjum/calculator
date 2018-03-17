@@ -10,7 +10,9 @@
 - [ ] Use proper math symbols in the buttons
 - [ ] Color scheme
 
-## BUGS
+## ISSUES
+
+- [ ] Chaining does not work after equal
 
 ## More features
 

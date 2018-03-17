@@ -1,5 +1,6 @@
 $font-stack: 'Segoe UI', sans-serif;
 $grey-light: #ddd;
+$grey-dark: darken($grey-light, 50%);
 
 body {
   font-family: $font-stack;
@@ -32,7 +33,7 @@ body {
   display: inline-block;
   float: right;
   font-size: 0.7em;
-  color: darken($grey-light, 50%);
+  color: $grey-dark;
   padding: 0.5px 3px 0.5px 3px;
   border-radius: 5px;
   border: 1px solid $grey-light;
@@ -58,6 +59,17 @@ body {
   height: 100px;
   margin-bottom: 10px;
   padding: 5px;
+  position: relative;
+}
+
+.numbers {
+  font-size: 1.2em;
+}
+
+.curOp {
+  position: absolute;
+  bottom: 0px;
+  color: $grey-dark;
 }
 
 .calc {

@@ -18,6 +18,7 @@ const initialState = {
   result: 0,
   display:'0',
   curNum: '', //current number
+  curOp: '', //current math operator
   op:'PLUS' // last used operator
 }
 
@@ -75,6 +76,7 @@ function reducer(state=initialState, action){
       return {
         ...state,
         curNum,
+        curOp: '',
         display: curNum,
         //After pressing the equal, if the user presses numbers then reset.
         result: state.op == 'EQUAL' ? 0 : state.result 
@@ -90,23 +92,23 @@ function reducer(state=initialState, action){
     case 'PLUS':
 
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'PLUS', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'PLUS', curNum: '', curOp: '+', result} : state
 
     case 'MINUS':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'MINUS', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'MINUS', curNum: '', curOp: '-', result} : state
 
     case 'MUL':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'MUL', curNum: '', result} : state
+      return state.curNum ? { ...state, op: 'MUL', curNum: '', curOp: symbols.MUL, result} : state
 
     case 'DIV':
       result = compute(state.op, state.result, state.curNum)
-      return state.curNum ? { ...state, op: 'DIV', curNum: '', result}: state
+      return state.curNum ? { ...state, op: 'DIV', curNum: '', curOp: symbols.DIV, result}: state
 
     case 'EQUAL':
       result = compute(state.op, state.result, state.curNum)
-      return { ...state, op: 'PLUS', curNum: '', display: result, result}
+      return { ...state, op: 'PLUS', curNum: '', curOp: '=', display: result, result}
   
     default:
       return state
@@ -116,7 +118,10 @@ function reducer(state=initialState, action){
 
 const _Display = (props)=>{
   return (
-    <div className='display'>{props.display}</div>
+    <div className='display'>
+      <div className="numbers">{props.display}</div>
+      <div className="curOp">{props.curOp}</div>
+    </div>
   )
 }
 
